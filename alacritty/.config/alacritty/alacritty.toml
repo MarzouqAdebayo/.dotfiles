@@ -1,0 +1,171 @@
+# Alacritty Configuration File
+# Reference: man 5 alacritty (>0.13)
+
+# Shell
+[terminal.shell]
+program = "/usr/bin/zsh"
+args    = [ "--login" ]
+
+# Environment
+[env]
+TERM = "xterm-256color"
+
+# Window
+[window]
+padding          = { x = 4, y = 4 }
+dynamic_padding  = true
+decorations      = "None"
+opacity          = 0.9
+
+# Scrolling
+[scrolling]
+history = 65535
+
+# Font
+[font]
+normal       = { family = "Lilex Nerd Font", style = "medium" }
+bold         = { family = "Lilex Nerd Font", style = "Bold" }
+italic       = { family = "Lilex Nerd Font", style = "Italic" }
+bold_italic  = { family = "Lilex Nerd Font", style = "Bold Italic" }
+size         = 10
+offset       = { x = 0, y = 0 }
+glyph_offset = { x = 0, y = 0 }
+
+# Colors
+[colors.primary]
+dim_foreground    = "#CDD6F4"
+bright_foreground = "#CDD6F4"
+background        = '#1C1C1C'
+foreground        = '#C9CBFF'
+
+[colors.cursor]
+text   = "#1E1E2E"
+cursor = "#F5E0DC"
+
+[colors.vi_mode_cursor]
+text   = "#1E1E2E"
+cursor = "#B4BEFE"
+
+[colors.search.matches]
+foreground = "#1E1E2E"
+background = "#A6ADC8"
+
+[colors.search.focused_match]
+foreground = "#1E1E2E"
+background = "#A6E3A1"
+
+[colors.hints.start]
+foreground = "#1E1E2E"
+background = "#F9E2AF"
+
+[colors.hints.end]
+foreground = "#1E1E2E"
+background = "#A6ADC8"
+
+[colors.footer_bar]
+foreground = "#1E1E2E"
+background = "#A6ADC8"
+
+[colors.selection]
+text       = "#1E1E2E"
+background = "#F5E0DC"
+
+[colors.normal]
+black   = "#282A36"
+red     = "#FF5555"
+green   = "#50FA7B"
+yellow  = "#F1FA8C"
+blue    = "#BD93F9"
+magenta = "#FF79C6"
+cyan    = "#8BE9FD"
+white   = "#F8F8F2"
+
+[colors.bright]
+black   = "#44475A"
+red     = "#FF6E6E"
+green   = "#69FF94"
+yellow  = "#FFFFA5"
+blue    = "#D6ACFF"
+magenta = "#FF92DF"
+cyan    = "#A4FFFF"
+white   = "#FFFFFF"
+
+[colors.dim]
+black   = "#1C1C28"
+red     = "#FF4242"
+green   = "#3EF07E"
+yellow  = "#E5FF87"
+blue    = "#B482FF"
+magenta = "#FF6FCC"
+cyan    = "#70E1F5"
+white   = "#CACACA"
+
+[colors]
+indexed_colors = [
+  { index = 16, color = "#FAB387" },
+  { index = 17, color = "#F5E0DC" },
+]
+draw_bold_text_with_bright_colors = true
+
+# Bell
+[bell]
+animation = "EaseOutExpo"
+duration  = 0
+color     = "#C0C5CE"
+
+# Selection
+[selection]
+save_to_clipboard = true
+
+# Cursor
+[cursor.style]
+shape    = "Block"
+blinking = "Always"
+
+[cursor.vi_mode_style]
+shape    = "Block"
+blinking = "Off"
+
+[cursor]
+blink_interval = 500
+blink_timeout  = 0
+
+# Mouse
+[mouse]
+hide_when_typing = true
+bindings = [
+  { mouse = "Middle", action = "PasteSelection" },
+]
+
+# Keyboard Bindings
+[keyboard]
+bindings = [
+  { key = "V",        mods = "Control|Shift", action = "Paste" },
+  { key = "C",        mods = "Control|Shift", action = "Copy" },
+  { key = "Paste",                            action = "Paste" },
+  { key = "Copy",                             action = "Copy" },
+  { key = "Insert",   mods = "Shift",         action = "PasteSelection" },
+  { key = "F",        mods = "Control|Shift", action = "SearchForward",  mode = "~Search" },
+  { key = "B",        mods = "Control|Shift", action = "SearchBackward", mode = "~Search" },
+  { key = "Key0",     mods = "Control",       action = "ResetFontSize" },
+  { key = "Equals",   mods = "Control",       action = "IncreaseFontSize" },
+  { key = "Minus",    mods = "Control",       action = "DecreaseFontSize" },
+  { key = "L",        mods = "Control",       action = "ClearLogNotice" },
+  { key = "L",        mods = "Control",       chars  = "\f" },
+  { key = "PageUp",   mods = "Shift",         action = "ScrollPageUp",    mode = "~Alt" },
+  { key = "PageDown", mods = "Shift",         action = "ScrollPageDown",  mode = "~Alt" },
+  { key = "Up",       mods = "Shift",         action = "ScrollLineUp",    mode = "~Alt" },
+  { key = "Down",     mods = "Shift",         action = "ScrollLineDown",  mode = "~Alt" },
+  { key = "Home",     mods = "Shift",         action = "ScrollToTop",     mode = "~Alt" },
+  { key = "End",      mods = "Shift",         action = "ScrollToBottom",  mode = "~Alt" },
+]
+
+# Debug (Uncomment if needed)
+#[debug]
+#render_timer       = false
+#persistent_logging = false
+#log_level          = "Warn"
+#renderer           = "None"
+#print_events       = false
+#highlight_damage   = false
+#prefer_egl         = false
