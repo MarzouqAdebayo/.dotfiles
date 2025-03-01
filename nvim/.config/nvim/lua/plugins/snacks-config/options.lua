@@ -111,8 +111,4 @@ M.styles = {
 	},
 }
 
-local function dynamic_layout()
-	return vim.o.columns >= 120 and layout_bg or layout_sm
-end
-
 return M
