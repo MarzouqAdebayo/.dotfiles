@@ -162,7 +162,18 @@ local function config_lualine(colors)
 				hash[v] = true
 			end
 		end
-		local language_servers = table.concat(unique_client_names, ", ")
+
+		local language_server_array = {}
+		for i = 1, #unique_client_names do
+			if i <= 2 then
+				language_server_array[i] = unique_client_names[i]
+			end
+		end
+		local language_servers = table.concat(language_server_array, ", ")
+
+		if #unique_client_names > 2 then
+			language_servers = language_servers .. ", " .. "..."
+		end
 
 		return "  " .. language_servers
 	end
