@@ -1,3 +1,18 @@
+local filetypes = {
+	{ text = "css" },
+	{ text = "go" },
+	{ text = "html" },
+	{ text = "javascript" },
+	{ text = "javascriptreact" },
+	{ text = "lua" },
+	{ text = "markdown" },
+	{ text = "python" },
+	{ text = "rust" },
+	{ text = "typescript" },
+	{ text = "typescriptreact" },
+	{ text = "zig" },
+}
+
 local keymaps = {
 	-- Top Pickers, Explorers & Search
 	{
@@ -309,16 +324,16 @@ local keymaps = {
 		desc = "Toggle Zoom",
 	},
 	{
-		"<leader>.",
+		"<leader>-",
 		function()
-			Snacks.scratch()
+			require("plugins.snacks-config.utils").new_scratch(filetypes)
 		end,
 		desc = "Toggle Scratch Buffer",
 	},
 	{
-		"<leader>S",
+		"<leader>.",
 		function()
-			Snacks.scratch.select()
+			require("plugins.snacks-config.utils").select_scratch(filetypes)
 		end,
 		desc = "Select Scratch Buffer",
 	},
