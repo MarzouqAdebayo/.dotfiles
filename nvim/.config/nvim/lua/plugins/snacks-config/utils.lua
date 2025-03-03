@@ -40,26 +40,19 @@ function M.select_scratch()
 		source = "scratch",
 		items = items,
 		format = "text",
-		-- layout = {
-		-- 	layout = { title = " Select Scratch Buffer: " },
-		-- 	preview = true,
-		-- 	preset = function()
-		-- 		return vim.o.columns >= 120 and "default" or "vertical"
-		-- 	end,
-		-- },
 		layout = function()
 			return vim.o.columns >= 120 and "telescope_horizontal" or "telescope_vertical"
 		end,
-		on_change = function()
-			vim.cmd.startinsert()
-		end,
+		-- on_change = function()
+		-- 	vim.cmd.startinsert()
+		-- end,
 		transform = function(item)
 			item.text = format_item_text(item)
 		end,
 		win = {
 			input = {
 				keys = {
-					["<c-x>"] = { "delete", mode = { "i", "n" } },
+					["dd"] = { "delete", mode = { "i", "n" } },
 				},
 			},
 		},
@@ -74,8 +67,9 @@ function M.select_scratch()
 				M.select_scratch()
 			end,
 		},
-		confirm = function(_, item)
+		confirm = function(picker, item)
 			if item then
+				picker:close()
 				Snacks.scratch.open { icon = item.icon, file = item.file, name = item.name, ft = item.ft }
 			end
 		end,

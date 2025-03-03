@@ -3,6 +3,9 @@ local M = {}
 
 M.animate = { enabled = false }
 M.git = { enabled = true }
+M.terminal = {
+	-- win = { position = "float" },
+}
 M.dashboard = {
 	sections = {
 		{ section = "header" },
@@ -12,7 +15,7 @@ M.dashboard = {
 		{ section = "startup" },
 	},
 }
-M.image = { enabled = true, force = true }
+M.image = { force = false, doc = { inline = false } }
 M.explorer = { enabled = false }
 M.indent = { enabled = true }
 M.input = { enabled = true }

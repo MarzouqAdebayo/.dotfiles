@@ -99,6 +99,8 @@ map("n", "YY", "va{Vy", merge { desc = "copy {} block" })
 map("n", "<C-u>", "<C-u>zz", merge {})
 map("n", "<C-d>", "<C-d>zz", merge {})
 map("n", ",", ";", { desc = "Repeat last f/t search" })
+map("n", "<Esc>", "<Esc> <cmd>noh<CR>", { desc = "general clear highlights" })
+
 -- Center mark position after jump
 map("n", "'", function()
 	return "'" .. vim.fn.nr2char(vim.fn.getchar()) .. "zz"
