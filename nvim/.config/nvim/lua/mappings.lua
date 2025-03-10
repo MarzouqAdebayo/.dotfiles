@@ -201,7 +201,11 @@ wk.add {
 	{
 		"<leader>fm",
 		function()
-			conform.format {}
+			conform.format {
+				lsp_fallback = true,
+				async = true,
+				timeout_ms = 500,
+			}
 		end,
 		desc = "Format file",
 		mode = { "n", "v" },

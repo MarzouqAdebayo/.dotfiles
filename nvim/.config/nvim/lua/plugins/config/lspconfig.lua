@@ -72,6 +72,7 @@ local servers = {
 	"prismals",
 	"dockerls",
 	"docker_compose_language_service",
+	"rust_analyzer",
 }
 
 for _, lsp in ipairs(servers) do
@@ -91,7 +92,8 @@ lspconfig.lua_ls.setup {
 
 lspconfig.ts_ls.setup {
 	capabilities = capabilities,
-	on_attach = function(client)
+	on_attach = function(client, bufnr)
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 		client.server_capabilities.documentFormattingProvider = false -- Disable formatting
 		client.server_capabilities.documentRangeFormattingProvider = false
 	end,
@@ -131,4 +133,25 @@ lspconfig.svelte.setup {
 			})
 		end
 	end,
+}
+
+lspconfig.rust_analyzer.setup {
+	capabilities = capabilities,
+	on_attach = function(_, bufnr)
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end,
+	settings = {
+		["rust-analyzer"] = {
+			check = {
+				command = "clippy", -- Use "clippy" for better linting, or "check"
+			},
+			diagnostics = {
+				enable = true,
+				experimental = {
+					enable = true,
+					enableNativeDiagnostics = true, -- Native diagnostics (improves real-time updates)
+				},
+			},
+		},
+	},
 }
