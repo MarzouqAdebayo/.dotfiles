@@ -1,0 +1,102 @@
+// Zellij configuration merging defaults with Tmux-inspired bindings
+theme "catppuccin-macchiato"
+default_shell "zsh"
+default_layout "compact"
+pane_frames true
+simplified_ui true
+copy_on_select true
+copy_command "xclip -selection clipboard" // Adjust to pbcopy (macOS) or wl-copy (Wayland)
+session_serialization true
+pane_viewport_serialization true
+auto_layout true
+default_mode "locked" // Start in locked mode to free keys for Neovim
+
+// Keybindings: Override defaults without clearing, use pane mode for Alt+h/j/k/l
+keybinds {
+    // Locked mode: Free keys for Neovim, minimal bindings
+    locked {
+        bind "Ctrl a" { SwitchToMode "tmux"; } // Enter tmux mode
+    }
+
+    // Normal mode: Keep defaults, override for Tmux compatibility
+    normal {
+        // Inherit defaults (e.g., Ctrl+g to locked, t to tab, r to resize)
+        bind "Ctrl a" { SwitchToMode "tmux"; } // Tmux prefix
+    }
+
+    // Tmux mode: Tmux-like bindings with Ctrl-a prefix
+    tmux {
+        // Pane splits
+        bind "|" { NewPane "right"; SwitchToMode "locked"; } // Ctrl+a |
+        bind "-" { NewPane "down"; SwitchToMode "locked"; } // Ctrl+a -
+
+        // Tab management
+        bind "c" { NewTab; SwitchToMode "locked"; } // Ctrl+a c
+        bind "Shift Left" { GoToPreviousTab; SwitchToMode "locked"; } // Ctrl+a Shift+Left
+        bind "Shift Right" { GoToNextTab; SwitchToMode "locked"; } // Ctrl+a Shift+Right
+        bind "Ctrl Shift Left" { MoveTab "left"; SwitchToMode "locked"; } // Ctrl+a Ctrl+Shift+Left
+        bind "Ctrl Shift Right" { MoveTab "right"; SwitchToMode "locked"; } // Ctrl+a Ctrl+Shift+Right
+
+        // Pane navigation
+        bind "h" { MoveFocusOrTab "left"; }
+        bind "j" { MoveFocus "down"; }
+        bind "k" { MoveFocus "up"; }
+        bind "l" { MoveFocusOrTab "right"; }
+
+        // Pane resizing (5 units)
+        bind "Alt h" { Resize "Increase left"; }
+        bind "Alt j" { Resize "Increase down"; }
+        bind "Alt k" { Resize "Increase up"; }
+        bind "Alt l" { Resize "Increase right"; }
+
+        // Pane resizing (1 unit)
+        bind "Ctrl Alt j" { Resize "down"; } // Ctrl+a Ctrl+Alt+j
+        bind "Ctrl Alt k" { Resize "up"; } // Ctrl+a Ctrl+Alt+k
+        bind "Ctrl Alt h" { Resize "left"; } // Ctrl+a Ctrl+Alt+h
+        bind "Ctrl Alt l" { Resize "right"; } // Ctrl+a Ctrl+Alt+l
+
+
+        // Escape should go back to locked mode in tmux mode
+        bind "esc" { SwitchToMode "locked"; }
+
+        // Sync panes
+        bind "y" { TogglePaneFrames; SwitchToMode "locked"; } // Ctrl+a y
+
+        // Detach (no config reload in Zellij)
+        bind "r" { Detach; } // Ctrl+a r
+
+        // Copy mode
+        bind "[" { SwitchToMode "scroll"; } // Ctrl+a [
+
+        // Enter pane mode for navigation
+        bind "p" { SwitchToMode "pane"; } // Ctrl+a p
+    }
+
+    // Pane mode: Alt+h/j/k/l for pane/tab navigation (overrides defaults)
+    pane {
+        // Override default h/j/k/l to avoid Neovim conflicts
+        bind "h" { MoveFocus "left"; }
+        bind "j" { MoveFocus "down"; }
+        bind "k" { MoveFocus "up"; }
+        bind "l" { MoveFocus "right"; }
+        bind "Alt Left" { GoToPreviousTab; }
+        bind "Alt Right" { GoToNextTab; }
+        // Retain useful defaults (e.g., n for new pane, x to close)
+        bind "esc" { SwitchToMode "locked"; } // Exit to locked
+    }
+
+    // Scroll mode: Vi-like copy mode
+    scroll {
+        bind "v" { EditScrollback; SwitchToMode "locked"; }
+        bind "y" { Copy; SwitchToMode "locked"; }
+        bind "esc" { SwitchToMode "locked"; }
+    }
+}
+
+// UI: Tmux-like minimal look
+ui {
+    pane_frames {
+        hide_session_name false
+        rounded_corners false
+    }
+}

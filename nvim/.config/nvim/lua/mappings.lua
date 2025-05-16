@@ -5,57 +5,6 @@ local harpoon = require "harpoon"
 local conform = require "conform"
 local options = { noremap = true, silent = true }
 
---git
--- {
--- 	"<leader>gb",
--- 	function()
--- 		Snacks.picker.git_branches()
--- 	end,
--- 	desc = "Git Branches",
--- },
--- {
--- 	"<leader>gl",
--- 	function()
--- 		Snacks.picker.git_log()
--- 	end,
--- 	desc = "Git Log",
--- },
--- {
--- 	"<leader>gL",
--- 	function()
--- 		Snacks.picker.git_log_line()
--- 	end,
--- 	desc = "Git Log Line",
--- },
--- {
--- 	"<leader>gs",
--- 	function()
--- 		Snacks.picker.git_status()
--- 	end,
--- 	desc = "Git Status",
--- },
--- {
--- 	"<leader>gS",
--- 	function()
--- 		Snacks.picker.git_stash()
--- 	end,
--- 	desc = "Git Stash",
--- },
--- {
--- 	"<leader>gd",
--- 	function()
--- 		Snacks.picker.git_diff()
--- 	end,
--- 	desc = "Git Diff (Hunks)",
--- },
--- {
--- 	"<leader>gf",
--- 	function()
--- 		Snacks.picker.git_log_file()
--- 	end,
--- 	desc = "Git Log File",
--- },
-
 local merge = function(a)
 	local c = {}
 	for k, v in pairs(a) do
@@ -100,6 +49,19 @@ map("n", "<C-u>", "<C-u>zz", merge {})
 map("n", "<C-d>", "<C-d>zz", merge {})
 map("n", ",", ";", { desc = "Repeat last f/t search" })
 map("n", "<Esc>", "<Esc> <cmd>noh<CR>", { desc = "general clear highlights" })
+map("n", "Q", "<nop>")
+
+-- QOL ------------------------------------------------------------------------
+map({ "n", "v" }, "<leader>y", [["+y]], merge { desc = "Copy to system clipboard" })
+map("n", "<leader>Y", [["+Y]], merge { desc = "Copy line to system clipboard" })
+
+-- Replace highlighed word
+map(
+	"n",
+	"<leader>R",
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	merge { desc = "Replace current selection" }
+)
 
 -- Center mark position after jump
 map("n", "'", function()
@@ -110,11 +72,11 @@ map("n", "`", function()
 end, { expr = true, noremap = true, desc = "Jump to exact mark position and center screen" })
 -- Toggle scroll on or off
 map("n", "<leader>uS", function()
-	if vim.o.scrolloff == 0 then
+	if vim.o.scrolloff == 8 then
 		vim.o.scrolloff = 999
 		print "Scrolloff set to 999"
 	else
-		vim.o.scrolloff = 0
+		vim.o.scrolloff = 8
 		print "Scrolloff disabled"
 	end
 end, { desc = "Toggle scrolloff" })
@@ -128,7 +90,6 @@ map("n", "<C-l>", "<C-w>l", merge { desc = "Window right" })
 -- Buffer Navigation ----------------------------------------------------------
 map({ "n", "v", "x", "o" }, "H", "g^", merge { desc = "First visible char in line" })
 map({ "n", "v", "x", "o" }, "L", "g_", merge { desc = "Last visible char in line" })
-map({ "n" }, "e", "E", merge { desc = "Skip word fast" })
 
 -- Line Movement --------------------------------------------------------------
 map("n", "<A-j>", ":m .+1<CR>==", merge { desc = "Move line up (N)" })
@@ -143,11 +104,10 @@ map("n", "E", function()
 	vim.diagnostic.open_float()
 end, merge { desc = "Move line up (N)" })
 
--- Blackholde delete -----------------------------------------------------------
+-- Blackhole delete -----------------------------------------------------------
 map({ "n", "x", "v", "o" }, "<leader>d", '"_d', merge { desc = "Delete without yanking" })
 
 -- File Explorer (Oil.nvim) ----------------------------------------------------
--- map("n", "<leader>e", "<Cmd>Oil<CR>", { desc = "Oil File Explorer" })
 map("n", "<leader>e", oil.toggle_float, merge { desc = "Oil" })
 
 -- Tab Navigation (Alt+Number) -------------------------------------------------

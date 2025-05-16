@@ -333,7 +333,7 @@ local keymaps = {
 	{
 		"<leader>.",
 		function()
-			require("plugins.snacks-config.utils").select_scratch(filetypes)
+			require("plugins.snacks-config.utils").select_scratch()
 		end,
 		desc = "Select Scratch Buffer",
 	},

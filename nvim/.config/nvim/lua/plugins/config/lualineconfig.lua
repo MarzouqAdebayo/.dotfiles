@@ -263,6 +263,7 @@ local function config_lualine(colors)
 	}
 end
 
-local colors = require "oldworld.palette"
+-- local colors = require "oldworld.palette"
+local colors = require "oldtale.palette"
 config_lualine(colors)
 vim.o.laststatus = vim.g.lualine_laststatus

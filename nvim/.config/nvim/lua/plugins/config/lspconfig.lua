@@ -98,6 +98,12 @@ lspconfig.ts_ls.setup {
 		client.server_capabilities.documentRangeFormattingProvider = false
 	end,
 	settings = {
+		-- typescript = {
+		-- 	diagnosticOption = {
+		-- 		enable = true,
+		-- 		onlyOpenFiles = true,
+		-- 	},
+		-- },
 		implicitProjectConfiguration = {
 			checkJs = true,
 		},

@@ -24,11 +24,11 @@ local options = {
 		-- everything else will use lsp format
 		rust = { "rustfmt" },
 	},
-	format_on_save = {
+	format_after_save = {
 		-- These options will be passed to conform.format()
 		lsp_fallback = true,
-		async = false,
-		timeout_ms = 500,
+		async = true,
+		timeout_ms = 2000,
 	},
 }
 

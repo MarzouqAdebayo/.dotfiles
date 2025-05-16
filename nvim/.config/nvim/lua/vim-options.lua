@@ -5,14 +5,16 @@ local opt = vim.opt
 local o = vim.o
 local g = vim.g
 
+g.snacks_animate = false
+
 g.mapleader = " " -- Use <Space> as the leader key
 
 o.laststatus = 3 -- Global statusline instead of per-window
 o.showmode = false -- Hide "-- INSERT --" since it's in the statusline
-o.scrolloff = 999 -- Alway center cursor to the middle of the screen
+-- o.scrolloff = 999 -- Alway center cursor to the middle of the screen
 
 opt.termguicolors = true -- Enable true color support
-opt.clipboard = "unnamedplus" -- Use system clipboard
+-- opt.clipboard = "unnamedplus" -- Use system clipboard
 opt.mouse = "a" -- Enable mouse in all modes
 
 opt.swapfile = false -- Disable swap files to reduce disk writes
@@ -40,11 +42,6 @@ o.signcolumn = "yes"
 -- Splitting behavior
 o.splitbelow = true -- New horizontal splits appear below
 o.splitright = true -- New vertical splits appear to the right
-
--- Reduces UI lag
-opt.lazyredraw = true -- Prevent unnecessary UI redraws
-opt.updatetime = 300 -- Faster UI refresh (default is 4000ms)
-opt.redrawtime = 10000 -- Prevent lag spikes when handling large files
 
 -- Miscellaneous UI
 opt.fillchars = { eob = " " } -- Hide `~` symbols on empty lines

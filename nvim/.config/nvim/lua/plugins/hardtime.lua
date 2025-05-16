@@ -1,7 +1,7 @@
 return {
-	"m4xshen/hardtime.nvim",
-	dependencies = { "MunifTanjim/nui.nvim" },
-	opts = {
-		showmode = false,
-	},
+  "m4xshen/hardtime.nvim",
+  dependencies = { "MunifTanjim/nui.nvim" },
+  opts = {
+    showmode = false,
+  }
 }
