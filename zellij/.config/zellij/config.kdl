@@ -25,17 +25,18 @@ keybinds {
     }
 
     // Tmux mode: Tmux-like bindings with Ctrl-a prefix
-    tmux {
+    tmux clear-defaults=true {
         // Pane splits
         bind "|" { NewPane "right"; SwitchToMode "locked"; } // Ctrl+a |
         bind "-" { NewPane "down"; SwitchToMode "locked"; } // Ctrl+a -
 
         // Tab management
         bind "c" { NewTab; SwitchToMode "locked"; } // Ctrl+a c
-        bind "Shift Left" { GoToPreviousTab; SwitchToMode "locked"; } // Ctrl+a Shift+Left
-        bind "Shift Right" { GoToNextTab; SwitchToMode "locked"; } // Ctrl+a Shift+Right
-        bind "Ctrl Shift Left" { MoveTab "left"; SwitchToMode "locked"; } // Ctrl+a Ctrl+Shift+Left
-        bind "Ctrl Shift Right" { MoveTab "right"; SwitchToMode "locked"; } // Ctrl+a Ctrl+Shift+Right
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; } // Ctrl+a z
+        bind "Tab" { GoToPreviousTab; } // Ctrl+a Tab
+        bind "Shift Tab" { GoToNextTab; } // Ctrl+a Shift+Tab
+        bind "Shift Left" { MoveTab "left"; SwitchToMode "locked"; } // Ctrl+a Shift+Left
+        bind "Shift Right" { MoveTab "right"; SwitchToMode "locked"; } // Ctrl+a Shift+Right
 
         // Pane navigation
         bind "h" { MoveFocusOrTab "left"; }
@@ -49,12 +50,8 @@ keybinds {
         bind "Alt k" { Resize "Increase up"; }
         bind "Alt l" { Resize "Increase right"; }
 
-        // Pane resizing (1 unit)
-        bind "Ctrl Alt j" { Resize "down"; } // Ctrl+a Ctrl+Alt+j
-        bind "Ctrl Alt k" { Resize "up"; } // Ctrl+a Ctrl+Alt+k
-        bind "Ctrl Alt h" { Resize "left"; } // Ctrl+a Ctrl+Alt+h
-        bind "Ctrl Alt l" { Resize "right"; } // Ctrl+a Ctrl+Alt+l
-
+        // Rename tab
+        bind "r" { SwitchToMode "RenameTab"; }
 
         // Escape should go back to locked mode in tmux mode
         bind "esc" { SwitchToMode "locked"; }
@@ -62,8 +59,11 @@ keybinds {
         // Sync panes
         bind "y" { TogglePaneFrames; SwitchToMode "locked"; } // Ctrl+a y
 
-        // Detach (no config reload in Zellij)
-        bind "r" { Detach; } // Ctrl+a r
+        // Detach
+        bind "d" { Detach; }
+
+        // Close focus
+        bind "x" { CloseFocus; SwitchToMode "locked"; }
 
         // Copy mode
         bind "[" { SwitchToMode "scroll"; } // Ctrl+a [

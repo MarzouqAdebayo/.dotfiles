@@ -1,43 +1,54 @@
-local plugin_files = {
-	"plugins.snacks",
-	"plugins.oil",
-	"plugins.lsp-config",
-	"plugins.bufferline",
-	"plugins.completions",
-	"plugins.conform",
-	-- "plugins.debugging",
-	"plugins.flash",
-	-- "plugins.hardtime",
-	"plugins.harpoon",
-	"plugins.lualine",
-	"plugins.nvim-autopairs",
-	"plugins.nvim-surround",
-	"plugins.nvim-ts-autotag",
-	-- "plugins.markview",
-	"plugins.oldworld",
-	"plugins.oldtale",
-	"plugins.rosepine",
-	"plugins.tdo",
-	"plugins.todo-comments",
-	"plugins.treesitter",
-	"plugins.undotree",
-	"plugins.which-key",
-	"plugins.nvim-ts-context-commentstring",
-	-- "plugins.nvim-treesitter-context",
-	"plugins.nvim-bqf",
-	"plugins.tiny-inline-diagnostic",
-	"plugins.nvim-ufo",
+local plugins_paths = {
+    -- Important
+    "plugins.lsp",
+    "plugins.blink-cmp",
+    "plugins.nvim-treesitter",
+    "plugins.oil",
+    "plugins.snipe",
+    "plugins.which-key",
+    "plugins.snacks",
+    "plugins.conform",
+    "plugins.typescript-tools",
+
+    "plugins.lsp-saga",
+
+    -- UI
+    "plugins.oldtale",
+    "plugins.nvim-webdev-icons",
+    "plugins.bufferline",
+    "plugins.lualine",
+
+    -- QOL 1
+    "plugins.undotree",
+    "plugins.nvim-bqf",
+    "plugins.markdown-preview",
+    "plugins.diffview",
+    "plugins.gitsigns",
+    "plugins.grug-far",
+    -- "plugins.tdo",
+
+    -- QOL 2
+    "plugins.nvim-ts-autotag",
+    "plugins.nvim-surround",
+    "plugins.nvim-autopairs",
+    "plugins.nvim-ts-context-commentstring",
+    "plugins.flash",
+    "plugins.treesj",
+    "plugins.yanky",
+    "plugins.virt-column",
+    "plugins.transparent",
+    "plugins.tiny-inline-diagnostic"
 }
 
 local plugins = {}
 
-for _, plugin in ipairs(plugin_files) do
-	local ok, mod = pcall(require, plugin)
-	if ok then
-		table.insert(plugins, mod)
-	else
-		vim.notify("Failed to load plugin config: " .. plugin, vim.log.levels.WARN)
-	end
+for _, plugin in ipairs(plugins_paths) do
+    local ok, mod = pcall(require, plugin)
+    if ok then
+        table.insert(plugins, mod)
+    else
+        vim.notify("Failed to load plugin config: " .. plugin, vim.log.levels.WARN)
+    end
 end
 
 return plugins

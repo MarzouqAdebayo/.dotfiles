@@ -1,4 +1,4 @@
 return {
-  "mbbill/undotree",
-  event = "BufEnter",
+    "mbbill/undotree",
+    event = "BufEnter",
 }

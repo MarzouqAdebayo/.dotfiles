@@ -1,0 +1,12 @@
+{
+  "ife": {
+    "prefix": "ife",
+    "body": [
+      "if ${1:err} != nil {",
+      "\tfmt.Errorf(\"%w\", ${2:err})",
+      "\treturn",
+      "}"
+    ],
+    "description": "Go error handling snippet"
+  }
+}

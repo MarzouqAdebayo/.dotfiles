@@ -1,47 +1,140 @@
+-- Pretty bufferline.
 return {
-	"akinsho/bufferline.nvim",
-	version = "*",
-	event = "VeryLazy",
-	dependencies = { "nvim-tree/nvim-web-devicons", "rose-pine/neovim" },
-	config = function()
-		local status_ok, bufferline = pcall(require, "bufferline")
-		if not status_ok then
-			return
-		end
-		vim.opt.termguicolors = true
-		bufferline.setup {
-			options = {
-				close_command = function()
-					Snacks.bufdelete.delete()
-				end,
-				right_mouse_command = function()
-					Snacks.bufdelete.delete()
-				end,
-				diagnostics = "nvim_lsp",
-				show_buffer_close_icons = false,
-				show_close_icon = false,
-				separator_style = { "", "" },
-				indicator = { style = "none" },
-				always_show_bufferline = true,
-				modified_icon = "",
-			},
-		}
+  {
+    'akinsho/bufferline.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local bufferline = require("bufferline")
+      local colors = require "oldtale.palette" -- Assuming this correctly returns your color table
 
-		local colors = require "oldtale.palette"
+      -- Define your color variables from your palette for clarity
+      local bg = "#000000"
+      local modified_fg = colors.fg
+      local fg_unselected = colors.subtext4 -- Muted foreground for unselected
+      local fg_selected = colors.orange     -- Bright foreground for selected
 
-		-- Transparent background for all tabs
-		vim.api.nvim_set_hl(0, "BufferLineFill", { bg = colors.bg_dark })
-		vim.api.nvim_set_hl(0, "BufferLineBackground", { bg = colors.bg_dark })
-		vim.api.nvim_set_hl(0, "BufferLineTab", { bg = colors.bg_dark })
-		vim.api.nvim_set_hl(0, "BufferLineTabClose", { bg = colors.bg_dark })
+      local fg_diag_error = colors.red
+      local fg_diag_warning = colors.yellow
+      local fg_diag_info = colors.cyan
+      local fg_diag_hint = colors.green
 
-		-- Highlight only the current tab text in purple
-		vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { bg = colors.bg_dark, fg = colors.orange, bold = true })
-		vim.api.nvim_set_hl(0, "BufferLineTabSelected", { bg = colors.bg_dark, fg = colors.orange, bold = true })
+      -- Helper table to ensure transparent background is consistently applied
+      local transparent = { bg = bg, fg = bg }
+      local fg_only = { bg = bg, fg = fg_unselected }
+      local selected = { bg = bg, fg = fg_selected, bold = true }
+      local fg_special = { fg = colors.red, bg = bg, bold = true }
 
-		-- Separator
-		vim.api.nvim_set_hl(0, "BufferLineSeparator", { fg = colors.bg_dark, bg = colors.bg_dark })
-		vim.api.nvim_set_hl(0, "BufferLineSeparatorVisible", { fg = colors.bg_dark, bg = colors.bg_dark })
-		vim.api.nvim_set_hl(0, "BufferLineSeparatorSelected", { fg = colors.bg_dark, bg = colors.bg_dark })
-	end,
+      bufferline.setup({
+        options = {
+          mode = "buffers",
+          style_preset = bufferline.style_preset.minimal,
+          themable = true, -- ESSENTIAL for highlight overrides to work
+          numbers = "none",
+          show_close_icon = false,
+          show_buffer_close_icons = false,
+          auto_toggle_bufferline = true,
+          truncate_names = true,
+          indicator = { style = 'none' }, -- Let highlights control indicator color
+          color_icon = true,              -- Uses diagnostic colors for icons
+          separator_style = false,        -- Or "thin", "padded_slant", "none", or false
+          close_command = function(bufnr)
+            Snacks.bufdelete(bufnr)
+          end,
+          diagnostics = 'nvim_lsp',
+          diagnostics_indicator = function(_, _, diag)
+            local icons = require('icons').diagnostics -- Assuming this exists and provides icons
+            local indicator = (diag.error and icons.ERROR .. ' ' or '') .. (diag.warning and icons.WARN or '')
+            return vim.trim(indicator)
+          end,
+          -- offsets = {
+          --   {
+          --     filetype = "NvimTree",
+          --     text = "File Explorer",
+          --     text_align = "left",
+          --     separator = true,
+          --   }
+          -- },
+        },
+        highlights = {
+          -- Main background for the entire bufferline (empty space)
+          -- Matches the unselected buffer text color for consistency
+          background = fg_only,
+          fill = transparent,
+
+          -- --- Buffer States ---
+          -- Unselected (visible) buffers
+          buffer_visible = fg_only,
+
+          -- numbers
+          numbers = fg_only,
+          numbers_visible = fg_only,
+          numbers_selected = fg_only,
+
+          -- Selected buffer
+          buffer_selected = selected,
+          tab_selected = selected,
+
+          -- modified
+          modified = { bg = bg, fg = modified_fg, bold = true },
+          modified_visible = { bg = bg, fg = modified_fg, bold = true },
+          modified_selected = { bg = bg, fg = modified_fg, bold = true },
+
+          -- duplicate
+
+          -- --- Diagnostics ---
+          -- General diagnostic indicator colors
+          diagnostic = fg_only,
+          diagnostic_visible = fg_only,
+          diagnostic_selected = { fg = fg_selected, bg = bg, bold = true },
+
+          hint = { fg = fg_diag_hint, bg = bg },
+          hint_visible = { fg = fg_diag_hint, bg = bg },
+          hint_selected = { fg = fg_diag_hint, bg = bg, bold = true },
+          hint_diagnostic = { fg = fg_diag_hint, bg = bg },
+          hint_diagnostic_visible = { fg = fg_diag_hint, bg = bg },
+          hint_diagnostic_selected = { fg = fg_diag_hint, bg = bg, bold = true },
+
+          info = { fg = fg_diag_info, bg = bg },
+          info_visible = { fg = fg_diag_info, bg = bg },
+          info_selected = { fg = fg_diag_info, bg = bg, bold = true },
+          info_diagnostic = { fg = fg_diag_info, bg = bg },
+          info_diagnostic_visible = { fg = fg_diag_info, bg = bg },
+          info_diagnostic_selected = { fg = fg_diag_info, bg = bg, bold = true },
+
+          warning = { fg = fg_diag_warning, bg = bg },
+          warning_visible = { fg = fg_diag_warning, bg = bg },
+          warning_selected = { fg = fg_diag_warning, bg = bg, bold = true },
+          warning_diagnostic = { fg = fg_diag_warning, bg = bg },
+          warning_diagnostic_visible = { fg = fg_diag_warning, bg = bg },
+          warning_diagnostic_selected = { fg = fg_diag_warning, bg = bg, bold = true },
+
+          error = { fg = fg_diag_error, bg = bg },
+          error_visible = { fg = fg_diag_error, bg = bg },
+          error_selected = { fg = fg_diag_error, bg = bg, bold = true },
+          error_diagnostic = { fg = fg_diag_error, bg = bg },
+          error_diagnostic_visible = { fg = fg_diag_error, bg = bg },
+          error_diagnostic_selected = { fg = fg_diag_error, bg = bg, bold = true },
+
+          -- --- Separators and Indicators ---
+          separator = transparent,
+          separator_selected = transparent,
+          tab_separator = transparent,
+          tab_separator_selected = transparent,
+          indicator_selected = transparent,
+          indicator_visible = transparent,
+
+          -- Offset separator (e.g., for NvimTree)
+          offset_separator = transparent,
+
+          -- Truncation marker (e.g., '...')
+          trunc_marker = { fg = fg_unselected, bg = bg },
+
+          -- Picker-related highlights
+          pick = fg_special,
+          pick_visible = fg_special,
+          pick_selected = fg_special,
+        }
+      })
+    end,
+  },
 }
