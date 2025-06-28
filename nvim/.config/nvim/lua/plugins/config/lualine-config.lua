@@ -79,9 +79,16 @@ local function config_lualine(colors)
         separator = { left = "", right = "" },
     }
 
+    local encoding = {
+        "encoding",
+        color = { bg = colors.gray2, fg = colors.blue, gui = "italic,bold" },
+        separator = { left = "", right = "" },
+    }
+
     local filetype = {
         "filetype",
         icons_enabled = true,
+        icon_only = true,
         color = { bg = colors.gray2, fg = colors.blue, gui = "italic,bold" },
         separator = { left = "", right = "" },
     }
@@ -248,15 +255,16 @@ local function config_lualine(colors)
             lualine_b = {
                 filename,
                 filetype,
+                encoding,
                 space,
             },
             lualine_c = {
                 branch,
                 diff,
                 space,
-                location,
             },
             lualine_x = {
+                location,
                 space,
             },
             lualine_y = { macro, space },
@@ -267,8 +275,8 @@ local function config_lualine(colors)
         },
         inactive_sections = {
             lualine_a = {},
-            lualine_b = {},
-            lualine_c = { "filename" },
+            lualine_b = { "filename" },
+            lualine_c = {},
             lualine_x = { "location" },
             lualine_y = {},
             lualine_z = {},

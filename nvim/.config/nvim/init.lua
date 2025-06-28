@@ -49,6 +49,7 @@ require('lazy').setup(plugins, {
     },
   },
 })
+require "utils"
 require "keymaps"
 require("highlights").init_highlights()
 -- require "winbar"

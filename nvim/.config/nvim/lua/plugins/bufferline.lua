@@ -8,21 +8,21 @@ return {
       local colors = require "oldtale.palette" -- Assuming this correctly returns your color table
 
       -- Define your color variables from your palette for clarity
-      local bg = "#000000"
+      local bg = "#000000"                  -- Black is transparent for some reason
       local modified_fg = colors.fg
-      local fg_unselected = colors.subtext4 -- Muted foreground for unselected
+      local fg_unselected = colors.subtext3 -- Muted foreground for unselected
       local fg_selected = colors.orange     -- Bright foreground for selected
 
-      local fg_diag_error = colors.red
-      local fg_diag_warning = colors.yellow
-      local fg_diag_info = colors.cyan
-      local fg_diag_hint = colors.green
+      local fg_diag_error = colors.bright_red
+      local fg_diag_warning = colors.bright_yellow
+      local fg_diag_info = colors.bright_cyan
+      local fg_diag_hint = colors.bright_purple
 
       -- Helper table to ensure transparent background is consistently applied
       local transparent = { bg = bg, fg = bg }
       local fg_only = { bg = bg, fg = fg_unselected }
       local selected = { bg = bg, fg = fg_selected, bold = true }
-      local fg_special = { fg = colors.red, bg = bg, bold = true }
+      local fg_special = { fg = colors.bright_red, bg = bg, bold = true }
 
       bufferline.setup({
         options = {

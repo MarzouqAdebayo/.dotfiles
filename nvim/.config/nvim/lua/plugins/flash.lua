@@ -1,6 +1,7 @@
 return {
   "folke/flash.nvim",
   event = "VeryLazy",
+  opts = {},
   keys = {
     {
       "s",
@@ -20,7 +21,7 @@ return {
     },
     {
       "r",
-      mode = "o",
+      mode = { "o", "x" },
       function()
         require("flash").remote()
       end,

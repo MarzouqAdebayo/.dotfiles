@@ -5,6 +5,7 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets", -- For snippets
       "onsails/lspkind.nvim",         -- For icons
+      'Kaiser-Yang/blink-cmp-avante',
     },
     version = "1.*",
     build = "cargo +nightly build --release",
@@ -48,7 +49,7 @@ return {
         sources    = {
           -- Disable some sources in comments and strings.
           default = function()
-            local sources = { 'lsp', 'buffer' }
+            local sources = { 'lsp', 'buffer', 'avante' }
             local ok, node = pcall(vim.treesitter.get_node)
 
             if ok and node then
@@ -62,8 +63,17 @@ return {
 
             return sources
           end,
+          providers = {
+            avante = {
+              module = 'blink-cmp-avante',
+              name = 'Avante',
+              opts = {
+                -- options for blink-cmp-avante
+              }
+            }
+          },
           per_filetype = {
-            codecompanion = { 'codecompanion', 'buffer' },
+            -- codecompanion = { 'codecompanion', 'buffer' },
           },
         },
         snippets   = {
