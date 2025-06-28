@@ -7,7 +7,6 @@ local plugins_paths = {
     "plugins.snipe",
     "plugins.which-key",
     "plugins.snacks",
-    "plugins.conform",
     "plugins.typescript-tools",
 
     "plugins.lsp-saga",
